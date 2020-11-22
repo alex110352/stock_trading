@@ -63,4 +63,3 @@ def get_company_financial(symbol = 'NaN',frequency = 'annual',statement_type = [
     
     return df
 
-print(get_company_financial('axsw2'))

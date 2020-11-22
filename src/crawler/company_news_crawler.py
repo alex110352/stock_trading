@@ -6,7 +6,7 @@ def get_company_news_link(company = 'NaN',news_num=5,time_range = 'today'):
     if company == 'NaN':
         return ' please input company name'
 
-    news = []
+    news_link = []
     googlenews = GoogleNews()
     googlenews.clear()
 
@@ -20,10 +20,10 @@ def get_company_news_link(company = 'NaN',news_num=5,time_range = 'today'):
     
     try :
         for num in range(news_num):
-            news.append(result[num]['link'])
+            news_link.append(result[num]['link'])
     except IndexError :
-        if len(news) == 0:
+        if len(news_link) == 0:
             return '此時段無'+company+'新聞 OR 網路不穩'
-        return news
+        return news_link
     else :
-        return news
+        return news_link

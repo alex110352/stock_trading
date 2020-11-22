@@ -3,9 +3,11 @@ import requests
 
 from bs4 import BeautifulSoup
 
-def  get_html_text(stock_symbol):
+def  get_share_html(stock_symbol='NaN'):
 
-    global simular_symbol_dict,status
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+
     url = 'https://finance.yahoo.com/quote/'+stock_symbol+'?p='+stock_symbol+'&.tsrc=fin-srch'
 
     try:
@@ -43,67 +45,113 @@ def  get_html_text(stock_symbol):
 
     except AttributeError :
 
-        status = 'error symbol'
-        return status
+        return 'error symbol'
 
     except ConnectionError :
         
-        status = 'connect timeout'  
-        return status
+        return 'connect timeout'  
 
-def get_currency(html_text):
+def get_currency(stock_symbol='NaN'):
+
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+        
+    html_text = get_share_html(stock_symbol)
+
+    if html_text == 'error symbol':
+        return 'error symbol'
+    elif html_text == 'connect timeout':
+        return 'connect timeout'
 
     try :
         currency = html_text.find('span', attrs={"data-reactid": "9"}).text.split(" ")[-1]
     except AttributeError:
-        return simular_symbol_dict
+        return html_text
     except TypeError:
-        return status
+        return 'error symbol'
     else : 
         return currency
 
-def get_current_price(html_text):
+def get_current_price(stock_symbol='NaN'):
+
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+        
+    html_text = get_share_html(stock_symbol)
+
+    if html_text == 'error symbol':
+        return 'error symbol'
+    elif html_text == 'connect timeout':
+        return 'connect timeout'
 
     try :
         current_price = html_text.find('span', attrs={"data-reactid": "32"}).text
     except AttributeError:
-        return simular_symbol_dict
+        return html_text
     except TypeError:
-        return status
+        return 'error symbol'
     else : 
         return current_price
 
-def get_open_price(html_text):
+def get_open_price(stock_symbol='NaN'):
 
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+        
+    html_text = get_share_html(stock_symbol)
+    
+    if html_text == 'error symbol':
+        return 'error symbol'
+    elif html_text == 'connect timeout':
+        return 'connect timeout'
+    
     try :
         open_price = html_text.find('span', attrs={"data-reactid": "93"}).text
     except AttributeError:
-        return simular_symbol_dict
+        return html_text
     except TypeError:
-        return status
+        return 'error symbol'
     else :
         return open_price
 
-def get_max_price(html_text):
+def get_max_price(stock_symbol='NaN'):
 
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+        
+    html_text = get_share_html(stock_symbol)
+    
+    if html_text == 'error symbol':
+        return 'error symbol'
+    elif html_text == 'connect timeout':
+        return 'connect timeout'
+    
     try :
         max_price = html_text.find('td', attrs={"data-reactid": "107"}).text.split(" ")[-1]
     except AttributeError:
-        return simular_symbol_dict
+        return html_text
     except TypeError:
-        return status
+        return 'error symbol'
     else :
         return max_price
 
-def get_min_price(html_text):
+def get_min_price(stock_symbol='NaN'):
 
+    if stock_symbol == 'NaN':
+        return 'please input symbol'
+        
+    html_text = get_share_html(stock_symbol)
+    
+    if html_text == 'error symbol':
+        return 'error symbol'
+    elif html_text == 'connect timeout':
+        return 'connect timeout'
+    
     try :
         min_price = html_text.find('td', attrs={"data-reactid": "107"}).text.split(" ")[0]
     except AttributeError:
-        return simular_symbol_dict
+        return html_text
     except TypeError:
-        return status
+        return 'error symbol'
     else :
         return min_price
-
-

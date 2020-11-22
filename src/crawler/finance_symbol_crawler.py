@@ -4,7 +4,7 @@ import time
 
 from bs4 import BeautifulSoup
 
-def get_html_text():
+def get_symbol_html():
 
     try:
         url = 'https://isin.twse.com.tw/isin/C_public.jsp?strMode=2'
@@ -15,7 +15,12 @@ def get_html_text():
     else:
         return html_text
 
-def get_finance_text(html_text):
+def get_finance_text():
+
+    html_text = get_symbol_html()
+    
+    if html_text == 'connect failed':
+        return 'connect failed'
 
     finance_text = []
     finance_htmls = html_text.find_all('td',attrs={"bgcolor": "#FAFAD2"})
@@ -23,7 +28,14 @@ def get_finance_text(html_text):
         finance_text.append(finance_html.text.strip())
     return finance_text
 
-def get_subject_list_index(html_text,finance_text):
+def get_subject_list_index():
+
+    html_text = get_symbol_html()
+
+    if html_text == 'connect failed':
+        return 'connect failed'
+
+    finance_text = get_finance_text()
 
     subject_list = []
     subject_list_index = []
@@ -42,8 +54,15 @@ def get_subject_list_index(html_text,finance_text):
     
     return subject_list_index
 
-def get_stock_df(finance_text,subject_list_index):
+def get_stock_df():
 
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
+    
     stock_df = pd.DataFrame()
     for num in range((subject_list_index[1])//7):
 
@@ -56,7 +75,14 @@ def get_stock_df(finance_text,subject_list_index):
 
     return stock_df
 
-def get_call_warrant_df(finance_text,subject_list_index):
+def get_call_warrant_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     call_warrant_df = pd.DataFrame()
     for num in range((subject_list_index[2]-subject_list_index[1])//7):
@@ -69,7 +95,14 @@ def get_call_warrant_df(finance_text,subject_list_index):
 
     return call_warrant_df
 
-def get_ETN_df(finance_text,subject_list_index):
+def get_ETN_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     ETN_df = pd.DataFrame()
     for num in range((subject_list_index[3]-subject_list_index[2])//7):
@@ -81,7 +114,14 @@ def get_ETN_df(finance_text,subject_list_index):
 
     return ETN_df
 
-def get_preferred_stock_df(finance_text,subject_list_index):
+def get_preferred_stock_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     preferred_stock_df = pd.DataFrame()
     for num in range((subject_list_index[4]-subject_list_index[3])//7):
@@ -95,7 +135,14 @@ def get_preferred_stock_df(finance_text,subject_list_index):
     
     return preferred_stock_df
 
-def get_ETF_df(finance_text,subject_list_index):
+def get_ETF_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     ETF_df = pd.DataFrame()
     for num in range((subject_list_index[5]-subject_list_index[4])//7):
@@ -107,7 +154,14 @@ def get_ETF_df(finance_text,subject_list_index):
     
     return ETF_df
 
-def get_ETN2_df(finance_text,subject_list_index):
+def get_ETN2_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     ETN2_df = pd.DataFrame()
     for num in range((subject_list_index[6]-subject_list_index[5])//7):
@@ -119,7 +173,14 @@ def get_ETN2_df(finance_text,subject_list_index):
     
     return ETN2_df
 
-def get_TDR_df(finance_text,subject_list_index):
+def get_TDR_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     TDR_df = pd.DataFrame()
     for num in range((subject_list_index[7]-subject_list_index[6])//7):
@@ -131,7 +192,14 @@ def get_TDR_df(finance_text,subject_list_index):
 
     return TDR_df
 
-def get_REIT_df(finance_text,subject_list_index):
+def get_REIT_df():
+
+    finance_text = get_finance_text()
+
+    if finance_text == 'connect failed':
+        return 'connect failed'
+
+    subject_list_index = get_subject_list_index()
 
     REIT_df = pd.DataFrame()
     for num in range((len(finance_text)-subject_list_index[7])//7):

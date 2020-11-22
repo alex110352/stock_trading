@@ -5,6 +5,7 @@ def get_history_data(stock_ID='NaN',start_date='NaN',end_date='NaN'):
 
     if stock_ID == 'NaN':
         return 'please input symbol'
+        
     try:
         data = yf.Ticker(stock_ID)
     except AttributeError:

@@ -14,9 +14,15 @@ def get_exchange_html():
     else:
         return soup
 
-def get_exchange_df(soup):
+def get_exchange_df():
+
+    soup = get_exchange_html()
+
+    if soup == 'connect failed':
+        return 'connect failed'
 
     exchange_df = pd.DataFrame()
+
     for num in range(len(soup.find_all("div",class_="visible-phone print_hide"))):
 
         name = soup.find_all("div",class_="visible-phone print_hide")[num].text.strip().split("\r\n")[0].split(" ")[0]
@@ -33,7 +39,12 @@ def get_exchange_df(soup):
 
     return exchange_df
 
-def get_exchange_rate(exchange_df,currency_name):
+def get_exchange_rate(currency_name="NaN"):
+
+    exchange_df = get_exchange_df() 
+
+    if exchange_df == 'connect failed':
+        return 'connect failed'
 
     if currency_name in list(exchange_df['currency']):
         return exchange_df[exchange_df['currency'] == currency_name] 
@@ -41,5 +52,3 @@ def get_exchange_rate(exchange_df,currency_name):
         return exchange_df[exchange_df['name'] == currency_name] 
     else :
         return exchange_df[['name','currency']]
-
-
