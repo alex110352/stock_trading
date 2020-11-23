@@ -14,7 +14,7 @@ from GoogleNews import GoogleNews
 def get_company_news_link(company = 'NaN',news_num=5,time_range = 'today'):
 
     if company == 'NaN':
-        return ' please input company name'
+        return 'please input company name'
 
     news_link = []
     googlenews = GoogleNews()
@@ -34,6 +34,6 @@ def get_company_news_link(company = 'NaN',news_num=5,time_range = 'today'):
     except IndexError :
         if len(news_link) == 0:
             return '此時段無'+company+'新聞 OR 網路不穩'
-        return str(news_link)[1:-1].replace(',',' ').replace("'",' ')
+        return news_link
     else :
-        return str(news_link)[1:-1].replace(',',' ').replace("'",' ')
+        return news_link

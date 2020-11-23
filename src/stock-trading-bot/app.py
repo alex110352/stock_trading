@@ -78,18 +78,57 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, message)
     elif '查詢股價' in msg:
         msg = get_mix_price(msg[4:])
+        if str(msg) == 'error symbol':
+            pass
+        elif str(msg) == 'connect timeout':
+            pass
+        elif str(msg)[:7] == 'simular':
+            pass
+        else:
+            msg =  'max_price = '+msg[0]+'\n'+'open_price = '+msg[1]+'\n'+'current_price = '+msg[2]+'\n'+'min_price = '+msg[3]
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)
     elif '查詢匯率' in msg:
         msg = get_exchange_rate(msg[4:])
+        if str(msg) == 'connect failed':
+            pass
+        elif len(msg.columns) == 2:
+            msg = str(msg)
+        else:
+            df_list = []
+            for num in range(len(msg.columns)):
+                df_list.append(msg.columns[num]+' : '+msg[msg.columns[num]][msg.index[0]])
+
+            msg = df_list[4]+'\n'+df_list[1]+'\n'+df_list[0]+'\n'+df_list[5]+'\n'+df_list[2]+'\n'+df_list[3]
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)
     elif '查詢新聞' in msg:
         if ',' in msg:
             text = msg[4:].split(',')
             msg = get_company_news_link(text[0],int(text[1]))
+            if str(msg) == 'please input company name':
+                pass
+            elif str(msg)[:4] == '此時段無':
+                pass
+            else:
+                msg = str(msg)[1:-1].replace(',',' ').replace("'",' ')
+            msg = str(msg)[1:-1].replace(',',' ').replace("'",' ')
         else:
             msg = get_company_news_link(msg[4:])
+            if str(msg) == 'please input company name':
+                pass
+            elif str(msg)[:4] == '此時段無':
+                pass
+            else:
+                msg = str(msg)[1:-1].replace(',',' ').replace("'",' ')
+        message = TextSendMessage(text=msg)
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '查詢財報' in msg:
+        msg = get_company_financial(msg[4:])
+        if str(msg) == 'please input symbol':
+            pass
+        else:
+            msg = str(msg.set_index('date').T)
         message = TextSendMessage(text=msg)
         line_bot_api.reply_message(event.reply_token, message)
     else:

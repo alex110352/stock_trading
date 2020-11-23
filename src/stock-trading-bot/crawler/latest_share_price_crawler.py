@@ -184,5 +184,6 @@ def get_mix_price(stock_symbol='NaN'):
     min_price = get_min_price(stock_symbol)
     open_price = get_open_price(stock_symbol)
 
-    return 'max_price = '+str(max_price)+'\n'+'open_price = '+str(open_price)+'\n'+'current_price = '+str(current_price)+'\n'+'min_price = '+str(min_price)
-    
+    return [max_price,open_price,current_price,min_price]
+
+

@@ -57,14 +57,8 @@ def get_exchange_rate(currency_name="NaN"):
         return 'connect failed'
 
     if currency_name in list(exchange_df['currency']):
-        df = exchange_df[exchange_df['currency'] == currency_name] 
+        return exchange_df[exchange_df['currency'] == currency_name] 
     elif currency_name in list(exchange_df['name']):
-        df = exchange_df[exchange_df['name'] == currency_name] 
+        return exchange_df[exchange_df['name'] == currency_name] 
     else :
-        return str(exchange_df[['name','currency']])
-    
-    df_list = []
-    for num in range(len(df.columns)):
-        df_list.append(df.columns[num]+' : '+df[df.columns[num]][df.index[0]])
-
-    return df_list[4]+'\n'+df_list[1]+'\n'+df_list[0]+'\n'+df_list[5]+'\n'+df_list[2]+'\n'+df_list[3]
+        return exchange_df[['name','currency']]
