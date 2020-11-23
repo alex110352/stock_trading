@@ -1,0 +1,9 @@
+line-bot-sdk
+flask
+pandas
+requests
+bs4
+yfinance
+GoogleNews
+yahoofinancials
+datetime
